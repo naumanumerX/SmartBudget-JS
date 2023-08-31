@@ -41,8 +41,7 @@ let productBtn=document.querySelector("#product-btn");
             
          
     });
-    document.addEventListener("DOMContentLoaded", () => {
- 
+   
 //Displaying fetched Data
 let bProduct=document.querySelector("#bProduct");
 let bProduct_Cost=document.querySelector("#bProduct-cost");
@@ -58,7 +57,7 @@ const displayData=()=>{
          if(allKeys.match("budget_")){
              jsonData=localStorage.getItem(allKeys);
              jsonParse=JSON.parse(jsonData);
-expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="bProduct-cost">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end ">   <i class="fa fa-edit"></i>&nbsp; &nbsp; <i class="fa fa-trash"></i>  </div></div>`
+expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="price">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end ">   <i class="fa fa-edit"></i>&nbsp; &nbsp; <i class="fa fa-trash"></i>  </div></div>`
           
 
          }
@@ -66,12 +65,38 @@ expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class
 
     let tBudget=localStorage.getItem("budget");
     totalBudget.innerHTML=tBudget;
-     let c=jsonParse.p_cost;
-    // console.log(c);
-    let bLeft=Number(tBudget)-Number(c);
-   balance_left.innerHTML=bLeft;
+//      let c=jsonParse.p_cost;
+//     console.log(c);
+//     let bLeft=Number(tBudget)-Number(c);
+//    balance_left.innerHTML=bLeft;
    
-    
- };
+    let price_tag=document.querySelectorAll("#price");
+    //console.log("in",price_tag.innerHTML)
+    let j=0;
+    let price=[];
+    //console.log(j);
+    for(j=0;j<price_tag.length;j++){
+     //  alert();
+     price[j]=price_tag[j].innerHTML;
+   // price.push(parseInt(price[j]));
+
+    }
+    let price_int=[];
+    let fPrice=0;
+    for(j=0;j<price_tag.length;j++){
+        //  alert();
+      //  price[i]=price_tag[j].innerHTML;
+       price_int.push(parseInt(price[j]));
+       fPrice +=price_int[j];
+   
+   
+       }
+       
+       let tExpenses=document.getElementById("total-expense")
+       
+       tExpenses.innerHTML=fPrice;
+       tBudget.innerHTML=tBudget-fPrice;
+       balance_left.innerHTML=tBudget-fPrice;
+
+ }
  displayData();
-});
