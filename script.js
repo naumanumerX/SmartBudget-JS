@@ -57,7 +57,7 @@ const displayData=()=>{
          if(allKeys.match("budget_")){
              jsonData=localStorage.getItem(allKeys);
              jsonParse=JSON.parse(jsonData);
-expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="price">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end ">   <i class="fa fa-edit"></i>&nbsp; &nbsp; <i class="fa fa-trash"></i>  </div></div>`
+expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="price">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end ">   <i class="fa fa-edit"></i>&nbsp; &nbsp; <i class="fa fa-trash delete-btn"></i>  </div></div>`
           
 
          }
@@ -95,8 +95,34 @@ expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class
        let tExpenses=document.getElementById("total-expense")
        
        tExpenses.innerHTML=fPrice;
-       tBudget.innerHTML=tBudget-fPrice;
+        
        balance_left.innerHTML=tBudget-fPrice;
 
  }
  displayData();
+
+ // delete
+// delete
+
+let deleteBtn = document.getElementsByClassName("delete-btn");
+
+for (let i = 0; i < deleteBtn.length; i++) {
+  deleteBtn[i].addEventListener("click", function() {
+   let confirm=window.confirm("Do you want to delete ? click on okay to delete");
+   if(confirm){
+    let del_parent = this.parentElement;
+    let div_parent = del_parent.parentElement;
+    let fChild = div_parent.querySelector("#bProduct").innerHTML;
+    
+   localStorage.removeItem("budget_"+fChild);
+   location.href=location.href;
+   
+   }
+   else{
+    alert("data is not deleted")
+   }
+  });
+}
+
+ 
+  
