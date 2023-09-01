@@ -57,7 +57,7 @@ const displayData=()=>{
          if(allKeys.match("budget_")){
              jsonData=localStorage.getItem(allKeys);
              jsonParse=JSON.parse(jsonData);
-expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="price">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end ">   <i class="fa fa-edit"></i>&nbsp; &nbsp; <i class="fa fa-trash delete-btn"></i>  </div></div>`
+expense_list.innerHTML+= `<div class="row mt-3 mb-3" id="b-border" >  <div class="col-md-6 d-flex justify-content-between">        <h5 id="bProduct">${jsonParse.p_title}</h5>      <h5 id="price">${jsonParse.p_cost}</h5>  </div>  <div class="col-md-6 d-flex justify-content-end  X ">   <i class="fa fa-edit edit-btn"></i>&nbsp; &nbsp; <i class="fa fa-trash delete-btn"></i>  </div></div>`
           
 
          }
@@ -113,16 +113,60 @@ for (let i = 0; i < deleteBtn.length; i++) {
     let del_parent = this.parentElement;
     let div_parent = del_parent.parentElement;
     let fChild = div_parent.querySelector("#bProduct").innerHTML;
-    
+   // alert(fChild);
    localStorage.removeItem("budget_"+fChild);
    location.href=location.href;
    
    }
    else{
-    alert("data is not deleted")
+    alert("data is not deleted  ")
    }
   });
 }
+//updating the product data
+    let editBtn=document.getElementsByClassName("edit-btn");
+    for(let i=0;i<editBtn.length;i++)
+    {
+    editBtn[i].addEventListener("click",function(e){
+        e.preventDefault();
+        let confirm=window.confirm("Do you want to update it ?");
+            if(confirm){
+                let editParent=this.parentElement;
+                let colParent=editParent.parentElement;
+            
+                let h5Data =colParent.querySelector("#bProduct");
+            
+                let fChild = h5Data.childNodes[0];
+                
+                //alert(fChild.textContent);
+                title.value=fChild.textContent;
+                title.focus();
+                productBtn.innerHTML="Update Your data";
+                productBtn.style.background="red";
 
- 
-  
+                productBtn.onclick=function(){
+                     localStorage.remove("budget_"+fChild.textContent);
+                     alert("fChild",fChild);
+                            let p_title=title.value;
+                            let p_cost=cost.value;
+                            
+                            let data={
+                                    p_title:p_title,
+                                    p_cost:p_cost
+                            };
+                           
+                            let dataToString=JSON.stringify(data);
+                            localStorage.setItem("budget_"+title.value,dataToString); //dynamic Key
+                            location.href=location.href;
+                                                // 
+
+                
+
+                
+            }
+        }
+            else{
+            alert("Data saved successfully");
+            }
+    })
+    }
